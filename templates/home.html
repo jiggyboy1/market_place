@@ -4,7 +4,7 @@
 
 
 <div class="container">
-    <section >
+    <header >
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" >
             <div class="carousel-inner">
                 <div class="carousel-item active img-fluid">
@@ -34,15 +34,39 @@
             <span class="visually-hidden">Next</span>
             </button>
         </div>
-    </section>
+    </header>
 </div>
-
+<br>
+<br>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">
-            hi
+        <div class="col-3">
+            <div>Categories</div>
+            <hr>
+            {% for item in cateogry%}
+                {{item}}
+            {% endfor %}
         </div>
-        
+
+        <div class="col-9">
+            <div>All Products</div>
+            <hr>
+            <div class="row">
+                {% for items in product %}
+                    <div class="col-12 col-lg-6">
+                        <div class="card">
+                            <div class="card h-100">
+                                <img src="{{items.image.url}}" class="card-img-top img-fluid" alt="...">
+                                <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
         
     </div>
