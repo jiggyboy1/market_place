@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="..."  style="max-height:100vh;">
+                    <img src="{% static 'pizz/download (1).jpg' %}" class="d-block w-100" alt="..."  style="max-height:100vh;">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -36,40 +36,73 @@
         </div>
     </header>
 </div>
+
 <br>
 <br>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3">
-            <div>Categories</div>
-            <hr>
-            {% for item in cateogry%}
-                {{item}}
-            {% endfor %}
-        </div>
 
-        <div class="col-9">
-            <div>All Products</div>
+        <div class="col">
+            <div style="text-align: center;"><h2>Best Selling Items</h2></div>
             <hr>
             <div class="row">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
                 {% for items in product %}
-                    <div class="col-12 col-lg-6">
+                    {% if items.flash_sale%}
+                    <div class="col-6 col-lg-3">
                         <div class="card">
-                            <div class="card h-100">
-                                <img src="{{items.image.url}}" class="card-img-top img-fluid" alt="...">
-                                <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <div class="card h-100" >
+                                <img src="{{items.image.url}}" class="card-img-top " alt="..." height="200" width="180"  >
+                                <div class="card-body" >
+                                <h5 class="card-title">{{items.name}}  </h5>
+                                <b>${{items.price}} </b>
+                                <p class="card-text">{{items}}</p>
+                                <a href="#" class="btn btn-outline-dark">View Product</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
 
         
     </div>
+<br>
+<section>
+    <div class="row">
+
+        <div class="col">
+            <div style="text-align: center;">
+                <h2>Lowest Price </h2>
+            </div>
+            <hr>
+            <div class="row">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                {% for items in product %}
+                    {% if items.price <= 100 %}
+                    <div class="col-6 col-lg-3">
+                        <div class="card">
+                            <div class="card h-100" >
+                                <img src="{{items.image.url}}" class="card-img-top " alt="..." height="200" width="180"  >
+                                <div class="card-body" >
+                                <h5 class="card-title">{{items.name}}  </h5>
+                                <b>${{items.price}} </b>
+                                <p class="card-text">{{items}}</p>
+                                <a href="#" class="btn btn-outline-dark">View Product</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
+</section>
 
 </div>
 

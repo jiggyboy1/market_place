@@ -17,6 +17,7 @@ class Product(models.Model):
     price = models.DecimalField(default=0 , decimal_places=2,max_digits =6)
     description = models.CharField(max_length=200, null=True,blank=True)
     image = models.ImageField(upload_to='photo/')
+    flash_sale = models.BooleanField(null=True,default=True)
 
     def __str__(self) -> str:
         return f"{self.description[0:30]}"
