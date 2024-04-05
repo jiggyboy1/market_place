@@ -1,3 +1,9 @@
 h2{
     font-family: 'Courier New', Courier, monospace;
 }
+
+.details{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}

@@ -8,3 +8,9 @@ def home(request):
     cateogry = Cateogry.objects.all()
     context = {'product':product,'cateogry':cateogry}
     return render(request,'home.html',context)
+
+
+def review(request,pk):
+    room = Product.objects.get(id=pk)
+    context = {'room':room}
+    return render(request,'product.html',context)

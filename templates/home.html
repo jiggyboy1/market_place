@@ -57,7 +57,7 @@
                                 <h5 class="card-title">{{items.name}}  </h5>
                                 <b>${{items.price}} </b>
                                 <p class="card-text">{{items}}</p>
-                                <a href="#" class="btn btn-outline-dark">View Product</a>
+                                <a href="{% url 'product' items.id %}" class="btn btn-outline-dark">View Product</a>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                 <h5 class="card-title">{{items.name}}  </h5>
                                 <b>${{items.price}} </b>
                                 <p class="card-text">{{items}}</p>
-                                <a href="#" class="btn btn-outline-dark">View Product</a>
+                                <a href="{% url 'product' items.id %}" class="btn btn-outline-dark">View Product</a>
                                 </div>
                             </div>
                         </div>
