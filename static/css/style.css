@@ -9,5 +9,25 @@ h2{
 }
 
 .footer{
-    background-color: black;
+    background-color: #26425a;
+}
+
+.footer h2{
+    color: white;
+}
+
+.footer h5{
+    color: white;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer p{
+    color: white;
+}
+.footer ul {
+    color: white;
 }
