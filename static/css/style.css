@@ -7,3 +7,7 @@ h2{
     display: flex;
     align-items: center;
 }
+
+.footer{
+    background-color: black;
+}
