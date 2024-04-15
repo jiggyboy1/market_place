@@ -31,3 +31,11 @@ h2{
 .footer ul {
     color: white;
 }
+
+.cateogry ul {
+    list-style-type: none;
+}
+
+.cateogry ul a {
+    text-decoration: none;
+}

@@ -1,0 +1,52 @@
+{% extends 'partial/main.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <div class="cateogry">
+                <h3>Category</h3>
+                <hr>
+                {% for cat in cateogry %}
+                <ul>
+                    <li>
+                        <a href="{% url 'category_page' cat.name  %}"> {{cat.name}} </a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="product">
+                <h3>Product</h3>
+                <hr>
+            </div>
+            <div class="row">
+                {% for items in product %}
+                    <div class="col-6 col-lg-3">
+                        <div class="card">
+                            <div class="card h-100" >
+                                <img src="{{items.image.url}}" class="card-img-top " alt="..." height="200" width="180" style="max-height:100vh;" >
+                                <div class="card-body" >
+                                <h6 class="card-title">{{items.name}}  </h6>
+                                <b>${{items.price}} </b><br>
+                                
+                                <a href="{% url 'product' items.id %}" class="btn btn-outline-dark">View Product</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        
+    </div>
+<br>
+
+
+
+
+{% endblock content %}

@@ -54,8 +54,8 @@
                             <div class="card h-100" >
                                 <img src="{{items.image.url}}" class="card-img-top " alt="..." height="200" width="180"  >
                                 <div class="card-body" >
-                                <h5 class="card-title">{{items.name}}  </h5>
-                                <b>${{items.price}} </b>
+                                <h6 class="card-title">{{items.name}}  </h6>
+                                <b>${{items.price}} </b><br>
                                 <p class="card-text">{{items}}</p>
                                 <a href="{% url 'product' items.id %}" class="btn btn-outline-dark">View Product</a>
                                 </div>
@@ -87,7 +87,7 @@
                             <div class="card h-100" >
                                 <img src="{{items.image.url}}" class="card-img-top " alt="..." height="200" width="180"  >
                                 <div class="card-body" >
-                                <h5 class="card-title">{{items.name}}  </h5>
+                                <h6 class="card-title">{{items.name}}  </h6>
                                 <b>${{items.price}} </b>
                                 <p class="card-text">{{items}}</p>
                                 <a href="{% url 'product' items.id %}" class="btn btn-outline-dark">View Product</a>
