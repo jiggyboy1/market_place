@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Product,Cateogry
-
+from django.contrib import messages
+from .forms import Register_form
+from django.contrib.auth import login,logout,authenticate
 
 # Create your views here.
 def home(request):
@@ -22,7 +24,30 @@ def category(request):
     return render(request,'category.html',context)
 
 def category_page(request,foo):
-    cateogry = Cateogry.objects.get(name=foo)
-    product = Product.objects.filter(cateogry=cateogry)
-    context = {'product':product,'cateogry':cateogry}
-    return render(request,'category_page.html',context)
+    try:
+        cateogry = Cateogry.objects.get(name=foo)
+        product = Product.objects.filter(cateogry=cateogry)
+        context = {'product':product,'cateogry':cateogry}
+        return render(request,'category_page.html',context)
+    except:
+        messages.success(request,"That Cateogries Doesn't Exist")
+        return redirect('home')
+
+def login_user(request):
+    pass
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+
+def register(request):
+    form = Register_form()
+    if request.method == 'POST':
+        form = Register_form(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request,user)
+            messages.success(request,"Your Account Created Succesfully")
+            return redirect('home')
+    context = {'form':form}
+    return render(request,'register.html',context)
