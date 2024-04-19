@@ -39,3 +39,19 @@ h2{
 .cateogry ul a {
     text-decoration: none;
 }
+
+
+.login .form-text{
+    color: black;
+}
+
+.login a{
+    text-decoration: none;
+
+}
+
+.login a:hover{
+    text-decoration: underline;
+
+}
+
