@@ -1,0 +1,40 @@
+{% extends 'partial/main.html' %}
+{% load static %}
+{% block content %}  
+
+
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-12">
+                <div class="login">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <h3>Sign Into Chat App</h3>
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text"  class="form-control" name="username">
+                        <div  class="form-text">
+                            Your username must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                        </div>
+
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password"  class="form-control" name="password">
+                        <div class="form-text">
+                            Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                        </div><br>
+                        <button class="btn btn-primary" style="text-align: center;">Submit</button><br>
+                        <b>Don't have an account?</b><a href="{% url 'register' %}" >Sign up</a>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content %}

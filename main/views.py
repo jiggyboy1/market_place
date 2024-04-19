@@ -34,7 +34,9 @@ def category_page(request,foo):
         return redirect('home')
 
 def login_user(request):
-    pass
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
 def logout_user(request):
     logout(request)
