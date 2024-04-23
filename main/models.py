@@ -23,7 +23,7 @@ class Product(models.Model):
         return f"{self.description[0:30]}"
     
 class Profile(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     bio = models.CharField(max_length=500,null=True,blank=True)
     image = models.ImageField(upload_to='profile/',blank=True,null=True)
 
@@ -52,3 +52,13 @@ class Order(models.Model):
     
     def __str__(self) -> str:
         return self.product
+     
+class Review(models.Model):
+    host = models.ForeignKey(User,on_delete=models.CASCADE)
+    product= models.ForeignKey(Product,on_delete=models.CASCADE)
+    body = models.CharField(max_length=300,null=True,blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.host} {self.product}"
+    
