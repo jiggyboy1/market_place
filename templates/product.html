@@ -5,28 +5,58 @@
 
 <br>
 <div class="container-fluid">
-    <h2>Details :</h2>
-    <div class="details">
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <h2>Details :</h2>
+            <div class="details">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
 
-                <div class="col-md-4">
-                    <img src="{{room.image.url}}" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Name: {{room.name}}</h5>
-                        <p class="card-text">Price: ${{room.price}}</p>
-                        <p class="card-text">Description: {{room.description}}</p>
-                        <p class="card-text">Cateogry: {{room.cateogry}}</p>
-                        <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">Home</a>
-                        <a href="#" class="btn btn-outline-primary">Order</a>
+                        <div class="col-md-4">
+                            <img src="{{room.image.url}}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Name: {{room.name}}</h5>
+                                <p class="card-text">Price: ${{room.price}}</p>
+                                <p class="card-text">Description: {{room.description}}</p>
+                                <p class="card-text">Cateogry: {{room.cateogry}}</p>
+                                <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">Home</a>
+                                <a href="#" class="btn btn-outline-primary">Order</a>
+                            </div>
                     </div>
-              </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="review">
+                <h2>Review</h2>
+                <hr>
+                <strong>COMMENT FROM VERIFIED PURCHASES({{room_count}})</strong>
+
+                {% for comment in message %}
+                <div>
+
+                    <p><b>{{comment.body}}</b></p>
+                    <small>@{{comment.host}}  {{comment.created|timesince}}</small>
+                  <hr>
+                </div>
+                {% endfor%}
+
+            </div>
+            <div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="message" class="form-control" placeholder="Kindly leave a review">
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 
 

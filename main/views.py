@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Product,Cateogry
+from .models import Product,Cateogry,Review
 from django.contrib import messages
 from .forms import Register_form
 from django.contrib.auth import login,logout,authenticate
@@ -14,7 +14,24 @@ def home(request):
 
 def review(request,pk):
     room = Product.objects.get(id=pk)
-    context = {'room':room}
+    message = room.review_set.all().order_by('-created')
+    room_count = room.review_set.count()
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            pass
+        else:
+            messages.error(request,'You must be logged in')
+            return redirect('home')
+        message1 = Review.objects.create(
+            host = request.user,
+            product = room,
+            body = request.POST.get('message'),
+        )
+        room.review_set.add()
+        return redirect('product',pk=room.id)
+    
+    context = {'room':room,'message':message,'room_count':room_count}
     return render(request,'product.html',context)
 
 def category(request):
@@ -22,6 +39,7 @@ def category(request):
     cateogry = Cateogry.objects.all()
     context = {'product':product,'cateogry':cateogry}
     return render(request,'category.html',context)
+
 
 def category_page(request,foo):
     try:
