@@ -22,7 +22,7 @@
                                 <p class="card-text">Description: {{room.description}}</p>
                                 <p class="card-text">Cateogry: {{room.cateogry}}</p>
                                 <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">Home</a>
-                                <a href="#" class="btn btn-outline-primary">Order</a>
+                                <button type="button" value="{{room.id}}" class="btn btn-primary" id="add-cart">Add To cart</button>
                             </div>
                     </div>
                     </div>
@@ -60,5 +60,33 @@
 
 
 
+<script>
+    //check if button was pressed
+
+    $(document).on('click','#add-cart',function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url : "{% url 'cart_add' %} ",
+            data : {
+                product_id : $('#add-cart').val(),
+                csrfmiddlewaretoken : '{{ csrf_token }}',
+                action : 'post'
+
+            },
+
+            success: function(json){
+                console.log(json)
+            },
+
+            error: function(xhr,errmsg,err){
+
+            }
+
+        });
+    })
+
+
+</script>
 
 {% endblock content %}
