@@ -31,9 +31,6 @@ def cart_add(request):
         return response
 
 
-
-
-
 def cart_delete(request):
     pass
 
