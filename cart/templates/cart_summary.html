@@ -12,29 +12,30 @@
 </header>
 
 <br>
-<div class="container">
-    {% for product in cart_products%}  
-    <div class="row">
-        <div class="col-12 col-lg-8">
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-
-                        <div class="col-md-4">
-                            <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Name: {{product.name}}</h5>
-                                <p class="card-text">Price: ${{product.price}}</p>
-                                <p class="card-text">Description: {{product.description}}</p>
-                                <p class="card-text">Cateogry: {{product.cateogry}}</p>
-                                <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">Home</a>
-                            </div>
-                    </div>
+<div class="container-fluid">
+    {% if cart_products%}
+        {% for product in cart_products%}  
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">Name: {{product.name}}</h5>
+                <p class="card-text">Price: ${{product.price}}</p>
+                <p class="card-text">Description: {{product.description}}.</p>
+                <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">Home</a>
                 </div>
+            </div>
+            </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+     
+    There's Nothing In Your Cart.....
+    
+    {% endif %}
 </div>
 
 
@@ -42,6 +43,6 @@
 
 
 
-<br><br><br><br><br><br><br><br>
+<br><br><br><br><br>
 
 {% endblock content %}
