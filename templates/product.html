@@ -9,7 +9,7 @@
         <div class="col-12 col-lg-8">
             <h2>Details :</h2>
             <div class="details">
-                <div class="card mb-3" style="max-width: 540px;">
+                <div class="card mb-3" style="max-width: 840px;">
                     <div class="row g-0">
 
                         <div class="col-md-4">
@@ -19,6 +19,19 @@
                             <div class="card-body">
                                 <h5 class="card-title">Name: {{room.name}}</h5>
                                 <p class="card-text">Price: ${{room.price}}</p>
+                                <div class="row ">
+                                    <div class="col-md-2">Quantity:</div>
+                                    <div class="col-md-2">
+                                        <select class="form-select form-select-sm " id="qty-cart" >
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
                                 <p class="card-text">Description: {{room.description}}</p>
                                 <p class="card-text">Cateogry: {{room.cateogry}}</p>
                                 <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">Home</a>
@@ -70,6 +83,7 @@ $(document).on('click','#add-cart',function(e){
         url : "{% url 'cart_add' %} ",
         data : {
             product_id : $('#add-cart').val(),
+            product_qty: $('#qty-cart option:selected'),
             csrfmiddlewaretoken : '{{ csrf_token }}',
             action : 'post'
 
