@@ -83,7 +83,7 @@ $(document).on('click','#add-cart',function(e){
         url : "{% url 'cart_add' %} ",
         data : {
             product_id : $('#add-cart').val(),
-            product_qty: $('#qty-cart option:selected'),
+            product_qty: $('#qty-cart option:selected').text(),
             csrfmiddlewaretoken : '{{ csrf_token }}',
             action : 'post'
 
