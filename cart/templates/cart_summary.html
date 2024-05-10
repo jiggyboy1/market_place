@@ -47,6 +47,8 @@
                 <p class="card-text">Description: {{product.description}}.</p>
                 <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">Home</a>
                 <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">Update</button>
+                <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">Remove</button>
+                
                 </div>
             </div>
             </div>
@@ -69,7 +71,7 @@
 
 <script>
     //check if button was pressed
-
+    // update cart
 $(document).on('click','.update-cart',function(e){
     e.preventDefault();
     //grab the product id 
@@ -99,5 +101,40 @@ $(document).on('click','.update-cart',function(e){
     });
 })
 </script>
+
+
+
+<script>
+    //check if button was pressed
+    // delete item from cart
+$(document).on('click','.delete-product',function(e){
+    e.preventDefault();
+    //grab the product id 
+    // var productid = $(this).data('index')
+
+    $.ajax({
+        type: 'POST',
+        url : "{% url 'cart_delete' %} ",
+        data : {
+            product_id : $(this).data('index'),
+            csrfmiddlewaretoken : '{{ csrf_token }}',
+            action : 'post'
+
+        },
+
+        success: function(json){
+            //console.log(json)
+            // document.getElementById('cart_quantity').textContent = json.qty
+            location.reload();
+        },
+
+        error: function(xhr, errmsg,err){
+
+        }
+
+    });
+})
+</script>
+
 
 {% endblock content %}
