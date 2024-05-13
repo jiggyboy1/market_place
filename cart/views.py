@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from .cart import Cart
 from main.models import Product
 from django.http import JsonResponse
+from django.contrib import messages
 
 
 # Create your views here.
@@ -34,6 +35,7 @@ def cart_add(request):
         # return a response 
         #response = JsonResponse({'Product Name: ': product.name})
         response = JsonResponse({'qty':cart_quantity})
+        messages.success(request,('Successfully Added To Cart'))
         return response
 
 
