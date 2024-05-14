@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from .models import Product,Cateogry,Review
 from django.contrib import messages
-from .forms import Register_form
+from .forms import Register_form,Updateuserform
 from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
@@ -72,13 +73,35 @@ def logout_user(request):
 
 
 def register(request):
-    form = Register_form()
+    form = Register_form(i)
     if request.method == 'POST':
         form = Register_form(request.POST)
         if form.is_valid():
-            user = form.save()
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username,password=password)
             login(request,user)
             messages.success(request,"Your Account Created Succesfully")
             return redirect('home')
     context = {'form':form}
     return render(request,'register.html',context)
+
+
+def update_user(request):
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id=request.user.id)
+        user_form = Updateuserform(request.POST or None)
+
+        if user_form.is_valid:
+            user_form.save()
+            login(request,current_user)
+            messages.success(request,"User Has Been Update")
+            return redirect('home')
+        context = {'user_form':user_form}
+        return render(request,'update_user.html',context)
+    else:
+        messages.success(request,'You Must Be Logged In To Access This Page')
+        return redirect('home')
+    
+
