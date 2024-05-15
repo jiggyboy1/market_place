@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from django.db.models.signals import post_save
 
 # Create your models here.
 
@@ -24,11 +25,23 @@ class Product(models.Model):
     
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    bio = models.CharField(max_length=500,null=True,blank=True)
+    date_modified = models.DateTimeField(User,auto_now=True)
+    phone =models.CharField(max_length=25,blank=True)
+    address1 = models.CharField(max_length=205,blank=True)
+    address2 = models.CharField(max_length=25,blank=True)
+    city =  models.CharField(max_length=25,blank=True)
+    country = models.CharField(max_length=25,blank=True)
     image = models.ImageField(upload_to='profile/',blank=True,null=True)
 
     def __str__(self) -> str:
         return f'{self.user.username}'
+    
+def create_profile(sender,instance,created,**kwargs):
+    if created:
+        user_profile = Profile(user=instance)
+        user_profile.save()
+
+post_save.connect(create_profile,sender=User)
 
 
 class Customer(models.Model):

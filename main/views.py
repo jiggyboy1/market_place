@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Product,Cateogry,Review
 from django.contrib import messages
-from .forms import Register_form,Updateuserform
+from .forms import Register_form,Updateuserform,ChangePasswordForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
 
@@ -63,6 +63,7 @@ def login_user(request):
             messages.success(request,'You have logged in')
             return redirect('home')
         else:
+            messages.error(request,"Your Username or Password Are Incorrect")
             return redirect('login')
     
     return render(request,'login.html')
@@ -81,6 +82,9 @@ def register(request):
             login(request,user)
             messages.success(request,"Your Account Created Succesfully")
             return redirect('home')
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request,error)
     context = {'form':form}
     return render(request,'register.html',context)
 
@@ -102,5 +106,25 @@ def update_user(request):
         return redirect('home')
     
 def update_password(request):
-    context = {}
-    return render(request,'update_password.html',context)
+    if request.user.is_authenticated:
+        current_user = request.user
+        if request.method == 'POST':
+            form = ChangePasswordForm(current_user,request.POST)
+            
+            if form.is_valid():
+                form.save()
+                messages.success(request,"Your Password Has Been Updated, Please Log In Again....")
+                return redirect('login')
+            else:
+                for error in list(form.errors.values()):
+                    messages.error(request,error)
+                    return redirect('update_password')
+
+        else:
+            form = ChangePasswordForm(current_user)
+            context = {'form':form}
+            return render(request,'update_password.html',context)
+        
+    else:
+        messages.success(request,'You Must Be Logged In')
+        return redirect('home')
