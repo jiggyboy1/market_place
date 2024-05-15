@@ -22,6 +22,7 @@ class Register_form(UserCreationForm):
 
 
 class Updateuserform(UserChangeForm):
+    password = None
     email = forms.EmailField(max_length=40,widget=forms.EmailInput(attrs={'class':'form-control'}))
     first_name = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'class':'form-control'}))
     last_name = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'class':'form-control'}))

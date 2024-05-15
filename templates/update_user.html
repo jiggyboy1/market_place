@@ -7,11 +7,13 @@
     <div class="row">
         <div class="col-12 col-lg-12">
             <div class="register">
-                <form action="{% url 'update_user %}" method="post">
+                <form action="{% url 'update_user' %}" method="post">
                     {% csrf_token %}
                     <h2>Update User Profile</h2>
                     {{user_form.as_p}}
-                    <button type="submit" class="btn btn-primary"> Submit</button><br>
+                    <button type="submit" class="btn btn-primary"> Submit</button>
+                    <a href="{% url 'update_password' %}" class="btn btn-success">Update Password</a>
+
                     
 
 

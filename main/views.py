@@ -73,14 +73,11 @@ def logout_user(request):
 
 
 def register(request):
-    form = Register_form(i)
+    form = Register_form()
     if request.method == 'POST':
         form = Register_form(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            user = authenticate(username=username,password=password)
+            user=form.save()
             login(request,user)
             messages.success(request,"Your Account Created Succesfully")
             return redirect('home')
@@ -91,12 +88,12 @@ def register(request):
 def update_user(request):
     if request.user.is_authenticated:
         current_user = User.objects.get(id=request.user.id)
-        user_form = Updateuserform(request.POST or None)
+        user_form = Updateuserform(request.POST or None, instance=current_user)
 
-        if user_form.is_valid:
+        if user_form.is_valid():
             user_form.save()
             login(request,current_user)
-            messages.success(request,"User Has Been Update")
+            messages.success(request,"User Has Been Updated")
             return redirect('home')
         context = {'user_form':user_form}
         return render(request,'update_user.html',context)
@@ -104,4 +101,6 @@ def update_user(request):
         messages.success(request,'You Must Be Logged In To Access This Page')
         return redirect('home')
     
-
+def update_password(request):
+    context = {}
+    return render(request,'update_password.html',context)
