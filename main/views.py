@@ -128,3 +128,6 @@ def update_password(request):
     else:
         messages.success(request,'You Must Be Logged In')
         return redirect('home')
+
+def update_info(request):
+    pass
