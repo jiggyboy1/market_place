@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12 col-lg-12">
             <div class="register">
-                <form action="{% url 'update_info' %}" method="post">
+                <form action="{% url 'update_info' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <h2>Update Info</h2>
                     {{form.as_p}}
