@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
-from .models import Product,Cateogry,Review
+from .models import Product,Cateogry,Review,Profile
 from django.contrib import messages
-from .forms import Register_form,Updateuserform,ChangePasswordForm
+from .forms import Register_form,Updateuserform,ChangePasswordForm,UserInfo
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
 
@@ -80,8 +80,8 @@ def register(request):
         if form.is_valid():
             user=form.save()
             login(request,user)
-            messages.success(request,"Your Account Created Succesfully")
-            return redirect('home')
+            messages.success(request,"Your Account Created Succesfully, Please Fill Out Your User Information")
+            return redirect('update_info')
         else:
             for error in list(form.errors.values()):
                 messages.error(request,error)
@@ -130,4 +130,16 @@ def update_password(request):
         return redirect('home')
 
 def update_info(request):
-    pass
+    if request.user.is_authenticated:
+        current_user = Profile.objects.get(user=request.user)
+        form = UserInfo(request.POST or None,request.FILES or None, instance=current_user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Your  Info Has Been Updated")
+            return redirect('home')
+        context = {'form':form}
+        return render(request,'update_info.html',context)
+    else:
+        messages.success(request,'You Must Be Logged In To Access This Page')
+        return redirect('home')
