@@ -18,7 +18,9 @@ def search(request):
     if request.method == "POST":
         searched = request.POST['searched']
         items = Product.objects.filter(name__icontains=searched)
-
+        
+        if not searched:
+            messages.success(request,"Please type something")
         if not items:
             messages.success(request,"That Product Doesn't Exist.....Please Try Again")
             return render(request,'search.html',{})
