@@ -5,6 +5,7 @@ from .forms import Register_form,Updateuserform,ChangePasswordForm,UserInfo
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
 
+
 # Create your views here.
 def home(request):
     product = Product.objects.all()
@@ -13,6 +14,22 @@ def home(request):
     return render(request,'home.html',context)
 
 
+def search(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        items = Product.objects.filter(name__icontains=searched)
+
+        if not items:
+            messages.success(request,"That Product Doesn't Exist.....Please Try Again")
+            return render(request,'search.html',{})
+        else:
+            context = {'searched':searched,'items':items}
+            return render(request,'search.html',context)
+
+    else: 
+        return render(request,'search.html')
+
+    
 def review(request,pk):
     room = Product.objects.get(id=pk)
     message = room.review_set.all().order_by('-created')

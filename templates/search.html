@@ -1,0 +1,62 @@
+{% extends 'partial/main.html' %}
+{% load static %}
+{% block content %}
+
+
+<header class="">
+    <div class="container px-2 px-lg-3 my-3">
+        <div class="text-center text-black">
+            <h1 class="display-4 fw-bolder">Search</h1>
+            <p class="lead fw-normal text-black-50 mb-0">Search For Product.......</p>
+        </div>
+    </div>
+</header>
+<br>
+
+<div class="container-fluid">
+    <div class="card" style="text-align: center;">
+        <div class="card-header">
+            Search
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Search For Product.....</h5>
+            <div class="mb-3">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="search" class="form-control"  placeholder="Search For Product......." name="searched"><br>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+    {% if searched %}
+        {% for item in items %}
+            <div class="col-6 col-lg-3">
+                <div class="card">
+                    <div class="card h-100" >
+                        <img src="{{item.image.url}}" class="card-img-top " alt="..." height="200" width="180"  >
+                        <div class="card-body" >
+                        <h6 class="card-title">{{item.name}}  </h6>
+                        <b>${{item.price}} </b>
+                        <p class="card-text">{{item}}</p>
+                        <a href="{% url 'product' item.id %}" class="btn btn-outline-dark">View Product</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    {% else %}
+            <h2>You didnt search for anything</h2>
+    {% endif %}
+    </div>
+</div>
+
+
+<br><br><br><br><br><br>
+
+{% endblock content %}
