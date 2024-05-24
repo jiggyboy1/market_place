@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm,SetPasswor
 
 
 class UserInfo(forms.ModelForm):
-    phone =forms.CharField(label='',widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Phone'}),required=False)
+    phone = forms.CharField(label='',widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Phone'}),required=False)
     address1 = forms.CharField(label='',widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Address1'}),required=False)
     address2 = forms.CharField(label='',widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Address2'}),required=False)
     city =  forms.CharField(label='',widget=forms.TextInput(attrs={'class':'form-control','placeholder':'city'}),required=False)

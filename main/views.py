@@ -4,7 +4,9 @@ from django.contrib import messages
 from .forms import Register_form,Updateuserform,ChangePasswordForm,UserInfo
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
-
+from payment.forms import ShippingForm
+from payment.models import ShippingAddress
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -17,7 +19,7 @@ def home(request):
 def search(request):
     if request.method == "POST":
         searched = request.POST['searched']
-        items = Product.objects.filter(name__icontains=searched)
+        items = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
         
         if not searched:
             messages.success(request,"Please type something")
@@ -151,13 +153,16 @@ def update_password(request):
 def update_info(request):
     if request.user.is_authenticated:
         current_user = Profile.objects.get(user=request.user)
+        shipping_user = ShippingAddress.objects.get(user=request.user)
         form = UserInfo(request.POST or None,request.FILES or None, instance=current_user)
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
 
-        if form.is_valid():
+        if form.is_valid() or shipping_form.is_valid():
             form.save()
+            shipping_form.save()
             messages.success(request,"Your  Info Has Been Updated")
             return redirect('home')
-        context = {'form':form}
+        context = {'form':form,'shipping_form':shipping_form}
         return render(request,'update_info.html',context)
     else:
         messages.success(request,'You Must Be Logged In To Access This Page')

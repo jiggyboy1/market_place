@@ -9,8 +9,13 @@
             <div class="register">
                 <form action="{% url 'update_info' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <h2>Update Info</h2>
+                    <h2>Update Info</h2><br>
+                    <strong>Billing Information</strong>
+                    <br>
                     {{form.as_p}}
+                    <br><br>
+
+                    {{shipping_form.as_p}}
                     <button type="submit" class="btn btn-primary"> Submit</button>
                     
 
