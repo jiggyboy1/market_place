@@ -1,0 +1,72 @@
+{% extends 'partial/main.html' %}
+{% load static %}
+{% block content %}
+
+<header class="">
+    <div class="container px-2 px-lg-3 my-3">
+        <div class="text-center text-black">
+            <h1 class="display-4 fw-bolder">Checkout</h1>
+            <p class="lead fw-normal text-black-50 mb-0">review Your cart</p>
+        </div>
+    </div>
+</header>
+
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="register">
+               
+
+                <div class="card">
+                    <div class="card-header">
+                      Order Summary 
+                    </div>
+                    <div class="card-body">
+                        {% for product in cart_products%}
+
+                            {{product.name }}:
+                            ${{product.price}}
+                            <br>
+                            <small>Quantity : 
+                            {% for key,value in quantities.items %}
+                                    {% if key == product.id|slugify %}
+                                        {{value}}
+                                    {% endif %}
+                                {% endfor %}
+                            </small>
+                            <br><br>
+                        {% endfor %}
+                        <strong>Total: ${{ totals }}</strong><br>
+                        <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary" >Update Items</a>
+                    </div>
+                </div>
+                <br><br>
+
+
+                <div class="card">
+                    <div class="card-header">
+                      Shipping Info 
+                    </div>
+                    <div class="card-body">
+                      {{ shipping_form.as_p }}
+                    </div>
+                </div>
+                <br><br>
+                <a href="#" class="btn btn-outline-secondary">Continue To Billing </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<br><br><br>
+
+
+
+
+{% endblock content %}
