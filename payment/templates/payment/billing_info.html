@@ -1,0 +1,117 @@
+{% extends 'partial/main.html' %}
+{% load static %}
+{% block content %}
+
+<header class="">
+    <div class="container px-2 px-lg-3 my-3">
+        <div class="text-center text-black">
+            <h1 class="display-4 fw-bolder">Billing Info</h1>
+            <p class="lead fw-normal text-black-50 mb-0">Enter Your Payment Info</p>
+        </div>
+    </div>
+</header>
+
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="register">
+               
+
+                <div class="card">
+                    <div class="card-header">
+                      Order Summary 
+                    </div>
+                    <div class="card-body">
+                        {% for product in cart_products%}
+
+                            {{product.name }}:
+                            ${{product.price}}
+                            <br>
+                            <small>Quantity : 
+                            {% for key,value in quantities.items %}
+                                    {% if key == product.id|slugify %}
+                                        {{value}}
+                                    {% endif %}
+                                {% endfor %}
+                            </small>
+                            <br><br>
+                        {% endfor %}
+                        <strong>Total: ${{ totals }}</strong><br>
+                        <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary" >Update Items</a>
+                    </div>
+                </div>
+                <br><br>
+
+
+                <div class="card">
+                    <div class="card-header">
+                      Shipping Info 
+                    </div>
+                    <div class="card-body">
+                        
+                      Name: {{ shipping_info.shipping_full_name }} <br>
+                      Email: {{ shipping_info.shipping_email }} <br>
+                      Address1: {{ shipping_info.shipping_address1 }} <br>
+                      Address2: {{ shipping_info.shipping_address2}} <br>
+                      City: {{ shipping_info.shipping_city }} <br>
+                      State: {{ shipping_info.shipping_state }} <br>
+                      Zipode: {{ shipping_info.shipping_zipcode }} <br>
+                      Country: {{ shipping_info.shipping_country }} <br>
+                      <br>
+                      <a href="{% url 'checkout' %}" class="btn btn-outline-secondary"> Update Shipping</a>  
+                    </div>
+                </div>
+                <br><br>
+                <button type="button"  class="btn btn-primary" onclick="makePayment()">Pay Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<br><br><br>
+
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<script>
+    let cart_total = '{{totals}}'
+    function makePayment() {
+        
+    FlutterwaveCheckout({
+
+        public_key: "FLWPUBK_TEST-f9a203e9a07a8fec13281390998806e8-X",
+        tx_ref: "titanic-48981487343MDI0NzMx",
+        amount: cart_total,
+        currency: "USD",
+        payment_options: "card, mobilemoneyghana, ussd",
+        redirect_url: "http://127.0.0.1:8000/payment/payment_success/",
+        meta: {
+        consumer_id: 23,
+        consumer_mac: "92a3-912ba-1192a",
+        },
+        customer: {
+        email: "rose@unsinkableship.com",
+        phone_number: "08102909304",
+        name: "Rose DeWitt Bukater",
+        },
+        customizations: {
+        title: "Market Place",
+        description: "Payment for an awesome cruise",
+        logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+        }     
+  });
+}
+
+</script>
+
+
+
+{% endblock content %}
