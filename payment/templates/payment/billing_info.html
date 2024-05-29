@@ -64,11 +64,11 @@
                     </div>
                 </div>
                 <br><br>
-                <form id="paymentForm">
+                <form id="paymentForm" method="post" action="{% url 'payment_success' %}">
                     {% csrf_token %}
                     
                     <div class="form-submit">
-                      <button type="submit" onclick="payWithPaystack()" class="btn btn-lg btn-success"> Pay </button>
+                      <button type="submit" onclick="payWithPaystack()" class="btn btn-lg btn-success"> Pay Now</button>
                     </div>
                 </form>
                   

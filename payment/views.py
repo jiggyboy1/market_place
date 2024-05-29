@@ -62,5 +62,20 @@ def checkout(request):
 
 
 def payment_success(request):
-    messages.success(request,"Payment Successful")
-    return render(request,'payment/payment_success.html',)
+    return render(request,'payment/payment_success.html')
+
+def process_order(request):
+    if request.POST:
+        cart = Cart(request)
+        cart_products = cart.get_prods
+        quantities = cart.get_quants
+        totals = cart.cart_total()
+
+        my_shipping = request.session.get('my_shipping')
+        print(my_shipping)
+
+
+        context = {'cart_products':cart_products,'quantities':quantities,'totals':totals, }
+        return render(request,'payment/process_order.html',context)
+    else: 
+        return redirect('home')
