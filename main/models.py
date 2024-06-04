@@ -15,7 +15,7 @@ class Cateogry(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=150)
     cateogry = models.ForeignKey(Cateogry,on_delete=models.CASCADE)
-    price = models.DecimalField(default=0 , decimal_places=2,max_digits =6)
+    price = models.DecimalField(default=0 , decimal_places=2,max_digits =12)
     description = models.CharField(max_length=200, null=True,blank=True)
     image = models.ImageField(upload_to='photo/')
     flash_sale = models.BooleanField(null=True,default=True)

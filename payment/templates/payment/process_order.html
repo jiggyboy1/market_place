@@ -8,21 +8,44 @@
     <div class="row">
         <div class="col-12 col-lg-12">
             <div class="register">
-               stuff
+                <div class="card">
+                    <div class="card-header">
+                      Order Summary 
+                    </div>
+                    <div class="card-body">
+                        {% for product in cart_products%}
+
+                            {{product.name }}:
+                            ₦{{product.price}}
+                            <br>
+                            <small>Quantity : 
+                            {% for key,value in quantities.items %}
+                                    {% if key == product.id|slugify %}
+                                        {{value}}
+                                    {% endif %}
+                                {% endfor %}
+                            </small>
+                            <br><br>
+                        {% endfor %}
+                        <strong>Total: ₦{{ totals }}</strong><br>
+                        <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary" >Update Items</a>
+                    </div>
+                </div>
+                <br><br>
 
 
 
 
 
                <form id="paymentForm" method="post" action="{% url 'payment_success' %}">
-                {% csrf_token %}
+                    {% csrf_token %}
                 
-                <div class="form-submit">
-                  <button type="submit" onclick="payWithPaystack()" class="btn btn-lg btn-success"> Pay Now</button>
-                </div>
-            </form>
+                    <div class="form-submit">
+                    <button type="submit" onclick="payWithPaystack()" class="btn btn-lg btn-success"> Pay Now</button>
+                    </div>
+                </form>
 
-            <script src="https://js.paystack.co/v1/inline.js"></script>
+                <script src="https://js.paystack.co/v1/inline.js"></script>
             </div>
         </div>
     </div>
@@ -66,6 +89,6 @@
     
     
     
-    </script>
+</script>
 
 {% endblock content %}

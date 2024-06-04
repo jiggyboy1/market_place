@@ -94,8 +94,9 @@ def process_order(request):
             create_order.save()
             messages.success(request,"Order Create")
             
+            
 
-        context = {'cart_products':cart_products,'quantities':quantities,'totals':totals, }
+        context = {'cart_products':cart_products,'quantities':quantities,'totals':totals, 'shipping_info':my_shipping}
         return render(request,'payment/process_order.html',context)
     else: 
         return redirect('home')

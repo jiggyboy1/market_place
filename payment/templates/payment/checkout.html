@@ -27,7 +27,7 @@
                         {% for product in cart_products%}
 
                             {{product.name }}:
-                            ${{product.price}}
+                            ₦{{product.price}}
                             <br>
                             <small>Quantity : 
                             {% for key,value in quantities.items %}
@@ -38,7 +38,7 @@
                             </small>
                             <br><br>
                         {% endfor %}
-                        <strong>Total: ${{ totals }}</strong><br>
+                        <strong>Total: ₦{{ totals }}</strong><br>
                         <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary" >Update Items</a>
                     </div>
                 </div>
