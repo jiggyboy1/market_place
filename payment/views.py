@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from cart.cart import Cart
 from payment.forms import ShippingForm
-from .models import ShippingAddress
+from .models import ShippingAddress,Order,OrderItems
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from main.models import Profile
@@ -72,8 +72,28 @@ def process_order(request):
         totals = cart.cart_total()
 
         my_shipping = request.session.get('my_shipping')
-        print(my_shipping)
 
+        full_name = my_shipping['shipping_full_name']
+        email = my_shipping['shipping_email']
+        shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_full_name']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_country']}\n{my_shipping['shipping_email']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}"
+        amount_paid = totals
+
+
+        #create order
+
+        if request.user.is_authenticated:
+            user = request.user
+
+            create_order = Order.objects.create(
+                user = user,
+                full_name = full_name,
+                shipping_address = shipping_address,
+                email = email,
+                amount_paid = amount_paid
+            )
+            create_order.save()
+            messages.success(request,"Order Create")
+            
 
         context = {'cart_products':cart_products,'quantities':quantities,'totals':totals, }
         return render(request,'payment/process_order.html',context)

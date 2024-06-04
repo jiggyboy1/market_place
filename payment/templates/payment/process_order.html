@@ -9,6 +9,20 @@
         <div class="col-12 col-lg-12">
             <div class="register">
                stuff
+
+
+
+
+
+               <form id="paymentForm" method="post" action="{% url 'payment_success' %}">
+                {% csrf_token %}
+                
+                <div class="form-submit">
+                  <button type="submit" onclick="payWithPaystack()" class="btn btn-lg btn-success"> Pay Now</button>
+                </div>
+            </form>
+
+            <script src="https://js.paystack.co/v1/inline.js"></script>
             </div>
         </div>
     </div>
@@ -19,5 +33,39 @@
 
 
 <br><br><br><br>
+
+<script>
+    var amount = '{{totals}}';
+    const paymentForm = document.getElementById('paymentForm');
+    paymentForm.addEventListener("submit", payWithPaystack, false);
+    
+    function payWithPaystack(e) {
+      e.preventDefault();
+    
+      let handler = PaystackPop.setup({
+        key: 'pk_test_e6eca74ec605d20f5b50347ec535e15501b04afe', // Replace with your public key
+        currency : 'NGN',
+        email: '{{ shipping_info.shipping_email }}',
+        amount: amount * 100,
+        ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
+        // label: "Optional string that replaces customer email"
+        onClose: function(){
+          alert('Window closed.');
+        },
+        callback: function(response){
+          let message = 'Payment complete! Reference: ' + response.reference;
+          alert(message);
+          window.location.href = "{% url 'payment_success' %}";
+        }
+      });
+    
+      handler.openIframe();
+    }
+    
+    
+    
+    
+    
+    </script>
 
 {% endblock content %}
