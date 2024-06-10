@@ -4,7 +4,7 @@ from payment.forms import ShippingForm
 from .models import ShippingAddress,Order,OrderItems
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from main.models import Profile
+from main.models import Profile,Product
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -92,6 +92,34 @@ def process_order(request):
                 amount_paid = amount_paid
             )
             create_order.save()
+
+            order_id = create_order.pk
+            # get product id 
+            for product in cart_products():
+                product_id = product.id
+                if product.flash_sale:
+                    price = product.price
+                else:
+                    price = product.price
+
+                # get quantity
+                for key,value in quantities().items():
+                    if int(key) == product.id:
+                        # create order items
+                        create_order_item = OrderItems(
+                            order_id = order_id,
+                            product_id = product_id,
+                            user = user,
+                            quantity =value ,
+                            price = price,
+                        )
+                        create_order_item.save()
+            #delete our cart 
+            for key in list(request.session.keys()):
+                if key == "session_key":
+                    #delete key 
+                    del request.session[key]
+
             messages.success(request,"Order Create")
             
             
