@@ -60,7 +60,7 @@ def checkout(request):
         return redirect('login')
 
 
-
+@login_required(login_url='login')
 def payment_success(request):
     return render(request,'payment/payment_success.html')
 
