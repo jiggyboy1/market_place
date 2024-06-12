@@ -167,3 +167,6 @@ def update_info(request):
     else:
         messages.success(request,'You Must Be Logged In To Access This Page')
         return redirect('home')
+
+def handling_404(request, exception):
+    return render(request,'404.html')
